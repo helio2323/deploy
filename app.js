@@ -1,3 +1,5 @@
+const {Builder} = require('selenium-webdriver');
+require("chromedriver");
 const express = require("express");
 const app = express();
 const port = process.env.PORT || 3001;
@@ -8,6 +10,14 @@ const server = app.listen(port, () => console.log(`Example app listening on port
 
 server.keepAliveTimeout = 120 * 1000;
 server.headersTimeout = 120 * 1000;
+
+(async function helloSelenium() {
+  let driver = await new Builder().forBrowser('chrome').build();
+
+  await driver.get('https://selenium.dev');
+
+  await driver.quit();
+})();
 
 app.get('/first', (req, res) => {
   return res.send({first: 'Devmon'})
